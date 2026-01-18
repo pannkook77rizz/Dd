@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <title>HT.L v13.37 — Breach Scanner</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: #0a0012;
+      color: #00ff41;
+      font-family: 'Consolas', 'Courier New', monospace;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+    }
+    .container {
+      width: 100%;
+      max-width: 540px;
+      background: rgba(0,0,0,0.92);
+      border: 2px solid #00aa33;
+      box-shadow: 0 0 35px rgba(0,255,80,0.2);
+      padding: 28px;
+      border-radius: 10px;
+    }
+    .header {
+      text-align: center;
+      color: #ff00aa;
+      font-size: clamp(22px, 6.5vw, 28px);
+      margin-bottom: 28px;
+      text-shadow: 0 0 12px #ff00aa;
+      letter-spacing: 1px;
+    }
+    .label {
+      color: #00ff9d;
+      font-size: clamp(16px, 4.5vw, 18px);
+      margin-bottom: 12px;
+      display: block;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 16px 14px;
+      font-size: clamp(17px, 5vw, 20px);
+      background: #000;
+      color: #00ff41;
+      border: 2px solid #004d1a;
+      border-radius: 6px;
+      font-family: inherit;
+      outline: none;
+      margin-bottom: 20px;
+    }
+    input:focus {
+      border-color: #00ff41;
+      box-shadow: 0 0 16px rgba(0,255,65,0.45);
+    }
+    .btn {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(180deg, #660000, #4d0000);
+      color: white;
+      font-size: clamp(17px, 5vw, 20px);
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.25s;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      touch-action: manipulation;
+      margin-bottom: 16px;
+    }
+    .btn:active {
+      transform: scale(0.97);
+      box-shadow: 0 0 30px rgba(255,0,0,0.7);
+    }
+    #warning {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: #220000;
+      border: 2px solid #ff3300;
+      border-radius: 8px;
+      padding: 14px;
+      margin: 20px 0;
+      font-size: clamp(17px, 5vw, 19px);
+      color: #ffcc00;
+      font-weight: bold;
+      text-shadow: 0 0 8px #ff6600;
+      gap: 14px;
+    }
+    .danger-icon {
+      font-size: clamp(28px, 8vw, 36px);
+      color: #ff0000;
+      animation: pulse 2s infinite;
+    }
+    #seeResultBtn {
+      display: none;
+      width: 100%;
+      padding: 16px;
+      background: #990000;
+      color: white;
+      font-size: clamp(16px, 4.8vw, 18px);
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 12px;
+    }
+    #seeResultBtn:active {
+      background: #cc0000;
+    }
+    #result {
+      display: none;
+      margin-top: 24px;
+      background: #0f001a;
+      border: 2px solid #ff0044;
+      border-radius: 8px;
+      padding: 22px;
+      box-shadow: 0 0 25px rgba(255,0,68,0.35);
+    }
+    .result-row {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 14px 0;
+      font-size: clamp(15px, 4.2vw, 17px);
+      gap: 12px;
+    }
+    .result-label {
+      color: #ff66aa;
+      font-weight: bold;
+      min-width: 110px;
+    }
+    .result-value {
+      color: #00ff41;
+      flex: 1;
+      word-break: break-all;
+    }
+    .status {
+      margin-top: 28px;
+      color: #ff0044;
+      font-size: clamp(13px, 3.8vw, 14px);
+      text-align: center;
+      text-shadow: 0 0 6px #ff0044;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+    @keyframes pulse {
+      0%,100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="header">HT.L v13.37 — ROBLOX SCANNER</div>
+    
+    <label class="label">USERNAME</label>
+    <input type="text" id="username" placeholder="LEAKED" autocomplete="off" spellcheck="false"/>
+
+    <button class="btn" onclick="scan()">CHECK</button>
+
+    <div id="warning">
+      <span class="danger-icon">⚠️</span>
+      <span>1 LEAK FOUND</span>
+    </div>
+
+    <button id="seeResultBtn" onclick="showLeak()">SEE RESULT</button>
+
+    <div id="result">
+      <div class="result-row">
+        <span class="result-label">USERNAME:</span>
+        <span class="result-value" id="showUser"></span>
+      </div>
+      <div class="result-row">
+        <span class="result-label">URL:</span>
+        <span class="result-value">roblox.com</span>
+      </div>
+      <div class="result-row">
+        <span class="result-label">PASSWORD:</span>
+        <span class="result-value" style="color:#ff0044; font-weight:bold;">pannkookrizz</span>
+      </div>
+    </div>
+
+    <div class="status">DARKPOOL LEAKED BY KEAZ_</div>
+  </div>
+
+  <script>
+    function scan() {
+      let username = document.getElementById('username').value.trim();
+      if (!username) username = "LEAKED";
+
+      document.getElementById('showUser').textContent = username;
+      
+      // Show warning + SEE RESULT button
+      document.getElementById('warning').style.display = 'flex';
+      document.getElementById('seeResultBtn').style.display = 'block';
+      
+      // Hide result until SEE RESULT is clicked
+      document.getElementById('result').style.display = 'none';
+    }
+
+    function showLeak() {
+      document.getElementById('result').style.display = 'block';
+      document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  </script>
+
+</body>
+</html>
